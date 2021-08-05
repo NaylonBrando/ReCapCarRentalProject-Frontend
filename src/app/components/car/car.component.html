@@ -1,23 +1,101 @@
-<div *ngIf="dataLoaded==false" class="spinner-border text-primary" role="status">
-    <span class="visually-hidden">Loading...</span>
-  </div>
-  
-  <table *ngIf="dataLoaded!=false" class="table">
+<div *ngIf="dataLoaded == false" class="spinner-border" role="status">
+  <span class="visually-hidden">Loading...</span>
+</div>
+<br />
+
+<div class="mb-3">
+  <label for="filterText" class="form-label">Arac Ara</label>
+  <input
+    type="text"
+    [(ngModel)]="filterText"
+    class="form-control"
+    id="filterText"
+    placeholder="Aranan araba ile ilgili bir bilgi giriniz"
+  />
+</div>
+
+<table>
+  <tr>
+    <td>
+      <select
+      style="height: 40px; width: 370px"
+        class="form-select form-select-sm"
+        aria-label=".form-select-sm example"
+        [(ngModel)]="brandParam"
+      >
+        <option value="">Hepsi</option>
+        <option *ngFor="let brand of cars">{{brand.colorName}}</option>
+      </select>
+    </td>
+
+    <td style="width: 20px"></td>
+
+    <td>
+      <select
+        style="height: 40px; width: 370px"
+        class="form-select form-select-sm"
+        aria-label=".form-select-sm example"
+        [(ngModel)]="colorParam"
+      >
+        <option value="">Hepsi</option>
+        <option *ngFor="let brand of cars">{{brand.brandName}}</option>
+
+      </select>
+    </td>
+    
+    <td style="width: 20px"></td>
+    <td>
+      <button (click)="filterCars()" type="button" class="btn btn-success">Filtrele</button>
+    </td>
+    <td style="width: 20px"></td>
+    <td>
+      <button (click)="clearFilter()" type="button" class="btn btn-danger">Filtre Sil</button>
+    </td>
+  </tr>
+</table>
+
+
+<tr></tr>
+
+
+<div>
+  <table class="table table-striped table-hover table-bordered">
     <thead>
       <tr>
-        <th>Car</th>
-        <th>Brand</th>
-        <th>Color</th>
-        <th>Model Year</th>
-        <th>Price</th>
+        <th>Resim</th>
+        <th>Marka</th>
+        <th>Model</th>
+        <th>Renk</th>
+        <th>Yıl</th>
+        <th>Fiyat</th>
       </tr>
     </thead>
-    <!-- class = table bootstrapten gelir -->
-    <tr *ngFor="let car of cars">
-      <td>{{ car.carName }}</td>
-      <td>{{ car.brandName }}</td>
-      <td>{{car.colorName}}</td>
-      <td>{{ car.modelYear }}</td>
-      <td>{{ car.dailyPrice }}</td>
-    </tr>
+    <tbody>
+      <tr
+        *ngFor="let car of cars | carFilterPipe:filterText |brandFilterPipe:brandFilter |colorFilterPipe:colorFilter"
+        style="height: 175px; width: 600px"
+        routerLink="/cars/car/{{ car.carId }}"
+      >
+        <td>
+          <div class="card" style="height: 50px; width: 250px">
+            <img
+              style="height: 150px; width: 250px"
+              *ngIf="car.firstCarImage == null"
+              src="{{ defaultCarImagePath }}"
+            />
+            <img
+              style="height: 150px; width: 250px"
+              *ngIf="car.firstCarImage != null"
+              src="{{ defaultPath }}{{ car.firstCarImage }}"
+            />
+          </div>
+        </td>
+        <td>{{ car.brandName }}</td>
+        <td>{{ car.carName }}</td>
+        <td>{{ car.colorName }}</td>
+        <td>{{ car.modelYear }}</td>
+        <td>{{ car.dailyPrice }}</td>
+      </tr>
+    </tbody>
   </table>
+</div>

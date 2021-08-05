@@ -5,19 +5,34 @@ import { ColorService } from 'src/app/services/color.service';
 @Component({
   selector: 'app-color',
   templateUrl: './color.component.html',
-  styleUrls: ['./color.component.css']
+  styleUrls: ['./color.component.css'],
 })
 export class ColorComponent implements OnInit {
   colors: Color[] = [];
-  constructor(private colorService:ColorService) { }
+  currentColor: Color;
+  constructor(private colorService: ColorService) {}
 
   ngOnInit(): void {
     this.getAllColors();
   }
 
-  getAllColors(){
+  getAllColors() {
     this.colorService.getAllColors().subscribe((response) => {
       this.colors = response.data;
     });
   }
+  setCurrentColor(color: Color) {
+    this.currentColor=color;
+  }
+
+  getCurrentColor(color: Color){
+    if(color==this.currentColor){
+      return "list-group-item active"
+    }
+    else{
+      return "list-group-item"
+    }
+  }
+  
+
 }
