@@ -12,21 +12,15 @@ export class RentalComponent implements OnInit {
   rentals: RentalDetail[] = [];
   dataLoaded = false;
 
-  rentData: Rental = {
-    carId: 1,
-    customerId: 1,
-    rentDate: '29.06.2023',
-    returnDate:'05.07.2023'
-  };
 
   constructor(private rentalService: RentalService) {}
 
   ngOnInit(): void {
-    this.getRentals();
+    this.getRentalsWithDetails();
   }
 
-  getRentals() {
-    this.rentalService.getRentals().subscribe((response) => {
+  getRentalsWithDetails() {
+    this.rentalService.getRentalsWithDetails().subscribe((response) => {
       this.rentals = response.data;
       this.dataLoaded = true;
     });

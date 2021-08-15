@@ -1,0 +1,95 @@
+<div>
+  <table class="table table-striped table-hover table-bordered">
+    <thead>
+      <tr>
+        <th>Kiralanacak Araba Bilgileri</th>
+        <th>Marka</th>
+        <th>Model</th>
+        <th>Renk</th>
+        <th>Yıl</th>
+        <th>Günlük Fiyat</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let car of carDetails" style="height: 175px; width: 600px">
+        <td>
+          <div class="card" style="height: 50px; width: 250px">
+            <img
+              style="height: 150px; width: 250px"
+              src="{{ defaultPath }}{{ carImagePath }}"
+            />
+          </div>
+        </td>
+        <td>{{ car.brandName }}</td>
+        <td>{{ car.carName }}</td>
+        <td>{{ car.colorName }}</td>
+        <td>{{ car.modelYear }}</td>
+        <td>{{ car.dailyPrice }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div>
+  <table class="table table-striped table-hover table-bordered">
+    <thead>
+      <tr>
+        <th>Secilen Tarih Aralıgı</th>
+        <th>Sorgula</th>
+        <th>Toplam Kiralama Tutari</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <form [formGroup]="rentalAddForm">
+            <div class="form-group col-md-12">
+              <label for="rentDate" class="form-label">Pick Up Date</label>
+              <div class="form-group mb-3">
+                <input
+                  class="form-control"
+                  type="date"
+                  id="rentDate"
+                  formControlName="rentDate"
+                />
+              </div>
+            </div>
+
+            <div class="form-group col-md-12">
+              <label for="returnDate" class="form-label">Delivery Date</label>
+              <div class="form-group mb-3">
+                <input
+                  type="date"
+                  id="returnDate"
+                  formControlName="returnDate"
+                  class="form-control"
+                />
+              </div>
+            </div>
+          </form>
+        </td>
+        <td>
+          <div>
+            <button
+              type="button"
+              class="btn btn-primary"
+              (click)="redirectToPayment(carId)"
+            >
+              Tarih Sorgula
+            </button>
+          </div>
+        </td>
+        <td>{{paymentValue}}</td>
+      </tr>
+    </tbody>
+    <tr></tr>
+    <tfoot *ngIf="dateStatus==true">
+        <tr>
+            <td>Kart bilgilerini giriniz. Kart bilgileri girilip, onay alındıktan sonra secilen tarihe arac kiralanir</td>
+        </tr>
+      <app-payment [rentDate] = rentDateValue [returnDate] = returnDateValue [carId] = carId [totalRentValue]=paymentValue></app-payment>
+    </tfoot>
+  </table>
+</div>
+{{rentDateValue}}
+Payment formu bu alta gelecek ama bu form uygun tarihte active, uygun olmayan tarihte disable
