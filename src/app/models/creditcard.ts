@@ -1,6 +1,6 @@
 export class CreditCard{
     id?:number
-    userId:any
+    customerId:any
     cardNumber:string
     expirationDate:string  
     cvv:string

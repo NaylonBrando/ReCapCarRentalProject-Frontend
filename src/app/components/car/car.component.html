@@ -16,15 +16,19 @@
 
 <table>
   <tr>
+    <th>Renkler</th>
+    <th>Markalar</th>
+  </tr>
+  <tr>
     <td>
       <select
       style="height: 40px; width: 370px"
         class="form-select form-select-sm"
         aria-label=".form-select-sm example"
-        [(ngModel)]="brandParam"
+        [(ngModel)]="colorParam"
       >
         <option value="">Hepsi</option>
-        <option *ngFor="let brand of cars">{{brand.colorName}}</option>
+        <option *ngFor="let color of colors">{{color.colorName}}</option>
       </select>
     </td>
 
@@ -35,10 +39,10 @@
         style="height: 40px; width: 370px"
         class="form-select form-select-sm"
         aria-label=".form-select-sm example"
-        [(ngModel)]="colorParam"
+        [(ngModel)]="brandParam"
       >
         <option value="">Hepsi</option>
-        <option *ngFor="let brand of cars">{{brand.brandName}}</option>
+        <option *ngFor="let brand of brands">{{brand.brandName}}</option>
 
       </select>
     </td>

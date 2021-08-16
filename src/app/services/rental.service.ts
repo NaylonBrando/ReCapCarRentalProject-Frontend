@@ -15,12 +15,12 @@ export class RentalService {
 
   constructor(private httpClient: HttpClient) {}
 
-  getRentalsWithDetails(): Observable<ListResponseModel<RentalDetail>> {
+  getAllRentalsWithDetails(): Observable<ListResponseModel<RentalDetail>> {
     let newPath = this.apiUrl + 'rentals/getallwithdetails';
     return this.httpClient.get<ListResponseModel<RentalDetail>>(newPath);
   }
 
-  getRentals(): Observable<ListResponseModel<Rental>> {
+  getAllRentals(): Observable<ListResponseModel<Rental>> {
     let newPath = this.apiUrl + 'rentals/getall';
     return this.httpClient.get<ListResponseModel<Rental>>(newPath);
   }

@@ -17,7 +17,7 @@ export class PaymentComponent implements OnInit {
   @Input() rentDate: Date;
   @Input() returnDate: Date;
   @Input() totalRentValue: number;
-  userId: any;
+  customerId: any;
   cardNumber: string;
   expirationDate: string;
   cvv: string;
@@ -25,7 +25,7 @@ export class PaymentComponent implements OnInit {
   date: Date;
   cardInHand: CreditCard = {
     id: 0,
-    userId: 0,
+    customerId: 0,
     cardNumber: '',
     expirationDate: '',
     cvv: '',
@@ -47,12 +47,7 @@ export class PaymentComponent implements OnInit {
     this.activatedRoute.params.subscribe((params) => {
       this.getCreditCards();
     });
-    this.getRentals();
-  }
-
-  deneme() {
-    this.cardInHand = this.creditCards.find((c) => c.userId == this.userId)!;
-    console.log(this.cardInHand);
+    this.getAllRentals();
   }
 
   getCreditCards() {
@@ -61,9 +56,29 @@ export class PaymentComponent implements OnInit {
     });
   }
 
+  addRental() {
+    let rental = {
+      carId: parseInt(this.carId),
+      customerId: parseInt(this.customerId),
+      rentDate: this.rentDate,
+      returnDate: this.returnDate,
+    };
+    return this.rentalService.add(rental);
+  }
+
+  getAllRentals() {
+    this.rentalService.getAllRentals().subscribe((response) => {
+      this.rentallist = response.data;
+    });
+  }
+
+  getLastRental(carId: number) {
+    return this.rentalService.getLastRental(this.carId);
+  }
+
   checkTheCreditCard() {
     let creditcard = {
-      userId: parseInt(this.userId),
+      customerId: parseInt(this.customerId),
       cardNumber: this.cardNumber,
       expirationDate: this.expirationDate,
       cvv: this.cvv,
@@ -145,9 +160,9 @@ export class PaymentComponent implements OnInit {
   }
 
   addPayment() {
-    this.cardInHand = this.creditCards.find((c) => c.userId == this.userId)!;
+    this.cardInHand = this.creditCards.find((c) => c.customerId == this.customerId)!;
     let payment = {
-      userId: parseInt(this.userId),
+      userId: parseInt(this.customerId),
       cardId: this.cardInHand.id!,
       date: this.date,
       totalPayment: this.totalRentValue,
@@ -155,23 +170,5 @@ export class PaymentComponent implements OnInit {
     return this.paymentService.addPayment(payment);
   }
 
-  addRental() {
-    let rental = {
-      carId: parseInt(this.carId),
-      customerId: parseInt(this.userId),
-      rentDate: this.rentDate,
-      returnDate: this.returnDate,
-    };
-    return this.rentalService.add(rental);
-  }
 
-  getRentals() {
-    this.rentalService.getRentals().subscribe((response) => {
-      this.rentallist = response.data;
-    });
-  }
-
-  getLastRental(carId: number) {
-    return this.rentalService.getLastRental(this.carId);
-  }
 }

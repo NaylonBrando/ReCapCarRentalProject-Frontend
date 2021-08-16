@@ -20,7 +20,7 @@ export class RentalComponent implements OnInit {
   }
 
   getRentalsWithDetails() {
-    this.rentalService.getRentalsWithDetails().subscribe((response) => {
+    this.rentalService.getAllRentalsWithDetails().subscribe((response) => {
       this.rentals = response.data;
       this.dataLoaded = true;
     });
