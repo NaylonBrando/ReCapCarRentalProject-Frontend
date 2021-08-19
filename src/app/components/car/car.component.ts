@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Brand } from 'src/app/models/brand';
-import { Car } from 'src/app/models/car';
+import { CarDetail } from 'src/app/models/carDetail';
 import { Color } from 'src/app/models/color';
 import { BrandService } from 'src/app/services/brand.service';
 import { CarService } from 'src/app/services/car.service';
@@ -13,7 +13,7 @@ import { ColorService } from 'src/app/services/color.service';
   styleUrls: ['./car.component.css'],
 })
 export class CarComponent implements OnInit {
-  cars: Car[] = [];
+  cars: CarDetail[] = [];
   dataLoaded = false;
   defaultPath ="https://localhost:44365";
   defaultCarImagePath="https://localhost:44365/images/default.jpg";
@@ -25,6 +25,9 @@ export class CarComponent implements OnInit {
   brandFilter="";
   colorFilter="";
   selected="";
+  ngTextRead(text: string) {
+    alert(text);
+  }
 
   constructor(
     private carService: CarService,

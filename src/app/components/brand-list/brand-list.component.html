@@ -1,0 +1,27 @@
+<table class="table table-striped" [width]="100">
+    <thead class="table-dark">
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Marka</th>
+            <th scope="col">
+                <button class="btn btn-success"  routerLink="/brands/add">
+          Marka Ekle
+        </button>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let brand of brands">
+            <th scope="row">{{ brand.brandId }}</th>
+            <td>{{ brand.brandName }}</td>
+            <td>
+                <button class="btn btn-warning"  routerLink="/brands/update/{{ brand.brandId }}">
+          Güncelle
+        </button>
+                <button class="btn btn-danger mx-2" routerLink="/brands/delete/{{ brand.brandId }}">
+          Sil
+        </button>
+            </td>
+        </tr>
+    </tbody>
+</table>

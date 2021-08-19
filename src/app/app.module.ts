@@ -19,6 +19,18 @@ import { ColorFilterPipePipe } from './pipes/color-filter-pipe.pipe';
 import { PaymentComponent } from './components/payment/payment.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RentalAddComponent } from './components/rental-add/rental-add.component';
+import { BrandAddComponent } from './components/brand-add/brand-add.component';
+import { ColorAddComponent } from './components/color-add/color-add.component';
+import { CarAddComponent } from './components/car-add/car-add.component';
+import { CarDeleteComponent } from './components/car-delete/car-delete.component';
+import { ColorUpdateComponent } from './components/color-update/color-update.component';
+import { ColorDeleteComponent } from './components/color-delete/color-delete.component';
+import { BrandUpdateComponent } from './components/brand-update/brand-update.component';
+import { BrandDeleteComponent } from './components/brand-delete/brand-delete.component';
+import { CarUpdateComponent } from './components/car-update/car-update.component';
+import { CarListComponent } from './components/car-list/car-list.component';
+import { BrandListComponent } from './components/brand-list/brand-list.component';
+import { ColorListComponent } from './components/color-list/color-list.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +47,18 @@ import { RentalAddComponent } from './components/rental-add/rental-add.component
     ColorFilterPipePipe,
     PaymentComponent,
     RentalAddComponent,
+    BrandAddComponent,
+    ColorAddComponent,
+    CarAddComponent,
+    CarDeleteComponent,
+    ColorUpdateComponent,
+    ColorDeleteComponent,
+    BrandUpdateComponent,
+    BrandDeleteComponent,
+    CarUpdateComponent,
+    CarListComponent,
+    BrandListComponent,
+    ColorListComponent,
     
     
   ],

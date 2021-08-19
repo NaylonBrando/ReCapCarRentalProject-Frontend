@@ -4,8 +4,9 @@ import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CarDetail } from 'src/app/models/carDetail';
 import { Rental } from 'src/app/models/rental';
-import { OneCarDetailService } from 'src/app/services/one-car-details.service';
+import { SingleCarDetailService } from 'src/app/services/single-car-details.service';
 import { RentalService } from 'src/app/services/rental.service';
+import { SingleCarDetail } from 'src/app/models/singleCarDetail';
 
 @Component({
   selector: 'app-rental-add',
@@ -16,13 +17,13 @@ export class RentalAddComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private rentalService: RentalService,
-    private carDetailService: OneCarDetailService,
+    private carDetailService: SingleCarDetailService,
     private formBuilder: FormBuilder,
     private toastrService: ToastrService
   ) {}
 
   rentalAddForm: FormGroup;
-  carDetails: CarDetail[];
+  carDetails: SingleCarDetail[];
   carId: number;
   carImagePath: string;
   defaultPath = 'https://localhost:44365';

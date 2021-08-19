@@ -1,0 +1,40 @@
+<div class="content">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header"><h5 class="title">Marka ekle</h5></div>
+      <div class="card-body">
+        <form [formGroup]="brandAddForm">
+          <div class="mb-3">
+            <label for="brandName">Marka adı</label>
+            <div class="form-group">
+              <input
+                type="text"
+                id="brandName"
+                formControlName="brandName"
+                class="form-control"
+                placeholder="Marka adı"
+              />
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="card-footer">
+        <table>
+          <tr>
+            <td>
+              <button class="btn btn-fill btn-dark" (click)="backToList()">
+                Geri Dön
+              </button>
+            </td>
+            <td></td>
+            <td>
+              <button class="btn btn-fill btn-primary" (click)="add()">
+                Ekle
+              </button>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -5,8 +5,9 @@ import { ToastrService } from 'ngx-toastr';
 import { CarDetail } from 'src/app/models/carDetail';
 import { CarImage } from 'src/app/models/carImage';
 import { Rental } from 'src/app/models/rental';
-import { OneCarDetailService } from 'src/app/services/one-car-details.service';
+import { SingleCarDetailService } from 'src/app/services/single-car-details.service';
 import { RentalService } from 'src/app/services/rental.service';
+import { SingleCarDetail } from 'src/app/models/singleCarDetail';
 
 @Component({
   selector: 'app-car-details',
@@ -17,12 +18,12 @@ export class CarDetailsComponent implements OnInit {
   formBuilder: any;
   //sonradan toastiri ekle aq
   constructor(
-    private carDetailService: OneCarDetailService,
+    private carDetailService: SingleCarDetailService,
     private activatedRoute: ActivatedRoute,
     private rentalService: RentalService,
     private toastrService: ToastrService
   ) {}
-  carDetails: CarDetail[];
+  carDetails: SingleCarDetail[];
   carDetails2: CarDetail;
   carImages: CarImage[];
   defaultPath = 'https://localhost:44365';
