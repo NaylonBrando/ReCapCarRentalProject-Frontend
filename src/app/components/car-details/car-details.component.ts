@@ -23,8 +23,7 @@ export class CarDetailsComponent implements OnInit {
     private rentalService: RentalService,
     private toastrService: ToastrService
   ) {}
-  carDetails: SingleCarDetail[];
-  carDetails2: CarDetail;
+  carDetails: SingleCarDetail;
   carImages: CarImage[];
   defaultPath = 'https://localhost:44365';
   defaultCarImagePath = 'https://localhost:44365/images/default.jpg';
@@ -51,8 +50,7 @@ export class CarDetailsComponent implements OnInit {
   GetCarDetailsById(carId: number) {
     this.carDetailService.getCarDetailsById(carId).subscribe((response) => {
       this.carDetails = response.data;
-      this.carDetails2=this.carDetails[0]
-      this.carImages = this.carDetails[0].carImage;
+      this.carImages = this.carDetails.carImage;
     });
   }
   

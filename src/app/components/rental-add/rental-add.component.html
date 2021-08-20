@@ -11,7 +11,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let car of carDetails" style="height: 175px; width: 600px">
+      <tr  style="height: 175px; width: 600px">
         <td>
           <div class="card" style="height: 50px; width: 250px">
             <img
@@ -20,11 +20,11 @@
             />
           </div>
         </td>
-        <td>{{ car.brandName }}</td>
-        <td>{{ car.carName }}</td>
-        <td>{{ car.colorName }}</td>
-        <td>{{ car.modelYear }}</td>
-        <td>{{ car.dailyPrice }}</td>
+        <td>{{ carDetails.brandName }}</td>
+        <td>{{ carDetails.carName }}</td>
+        <td>{{ carDetails.colorName }}</td>
+        <td>{{ carDetails.modelYear }}</td>
+        <td>{{ carDetails.dailyPrice }}</td>
       </tr>
     </tbody>
   </table>

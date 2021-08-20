@@ -24,29 +24,29 @@
   
   <div class="table-responsive-md mt-3 ">
     <table class="table table-striped table-hover table-bordered">
-      <thead *ngFor="let car of carDetails">
+      <thead >
         <tr>
           <th>Marka</th>
-          <td>{{ car.brandName }}</td>       
+          <td>{{ carDetails.brandName }}</td>       
         </tr>
         <tr>
           <th>Renk</th>
-          <td>{{ car.colorName }}</td>
+          <td>{{ carDetails.colorName }}</td>
         </tr>
         <tr>
           <th>Model</th>
-          <td>{{ car.modelYear }}</td>
+          <td>{{ carDetails.modelYear }}</td>
         </tr>
           <tr>
             <th>Günlük ücret</th>
-            <td>{{ car.dailyPrice }} ₺</td>
+            <td>{{ carDetails.dailyPrice }} ₺</td>
           </tr>
           <tr>
             <th>Açıklama</th>
-            <td>{{ car.description }}</td>
+            <td>{{ carDetails.description }}</td>
           </tr>
           <tr>
-            <th><button type="button" class="btn btn-primary" routerLink="/rent/car/{{car.carId}}">Kirala</button></th>
+            <th><button type="button" class="btn btn-primary" routerLink="/rent/car/{{carDetails.carId}}">Kirala</button></th>
           </tr>
       </thead>
     </table>

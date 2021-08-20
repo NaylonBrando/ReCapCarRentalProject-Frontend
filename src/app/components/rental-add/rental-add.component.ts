@@ -23,7 +23,7 @@ export class RentalAddComponent implements OnInit {
   ) {}
 
   rentalAddForm: FormGroup;
-  carDetails: SingleCarDetail[];
+  carDetails: SingleCarDetail;
   carId: number;
   carImagePath: string;
   defaultPath = 'https://localhost:44365';
@@ -66,9 +66,9 @@ export class RentalAddComponent implements OnInit {
   GetCarDetailsById(carId: number) {
     this.carDetailService.getCarDetailsById(carId).subscribe((response) => {
       this.carDetails = response.data;
-      this.carImagePath = this.carDetails[0].carImage[0].imagePath;
-      this.carId = this.carDetails[0].carId;
-      this.dailyPric = this.carDetails[0].dailyPrice;
+      this.carImagePath = this.carDetails.carImage[0].imagePath;
+      this.carId = this.carDetails.carId;
+      this.dailyPric = this.carDetails.dailyPrice;
     });
   }
 
@@ -120,7 +120,7 @@ export class RentalAddComponent implements OnInit {
             let sakla2 = Date.parse(this.returnDateValue.toString());
             let sakla3 = sakla2 - sakla1;
             this.tarihsakla = sakla3 / (1000 * 60 * 60 * 24) + 1;
-            this.paymentValue = this.carDetails[0].dailyPrice * this.tarihsakla;
+            this.paymentValue = this.carDetails.dailyPrice * this.tarihsakla;
             this.toastrService.info('A Araç müsait.');
             this.toastrService.clear();
             this.dateStatus = true;
@@ -148,7 +148,7 @@ export class RentalAddComponent implements OnInit {
           let sakla2 = Date.parse(this.returnDateValue.toString());
           let sakla3 = sakla2 - sakla1;
           this.tarihsakla = sakla3 / (1000 * 60 * 60 * 24) + 1;
-          this.paymentValue = this.carDetails[0].dailyPrice * this.tarihsakla;
+          this.paymentValue = this.carDetails.dailyPrice * this.tarihsakla;
           this.toastrService.info('B Araç müsait.');
           this.toastrService.clear();
           this.dateStatus = true;
