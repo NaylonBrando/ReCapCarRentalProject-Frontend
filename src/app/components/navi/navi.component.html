@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-dark  bg-dark">
     <div class="container-fluid">
       <a class="navbar-brand" href="">CarRental</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -26,10 +26,25 @@
             <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
           </li>
         </ul>
-        <form class="d-flex">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
+        
+        <div class="text-end btn-group">
+          <button *ngIf="!isLogged()" type="button" routerLink="/login" class="btn btn-outline-primary">
+            LogIn
+          </button>
+          <button *ngIf="!isLogged()" type="button" routerLink="/register" class="btn btn-outline-warning">Register</button>
+
+          <div *ngIf="isLogged()" class="btn-group text-end">
+            <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+              <span>{{currentUser}}</span>
+
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" routerLink="/profile/update">Hesabımı Güncelle</a></li>
+              <li><a class="dropdown-item" (click) = "logOut()">Çıkış</a></li>
+            </ul>
+          </div>
+        </div>
+              
       </div>
     </div>
   </nav>

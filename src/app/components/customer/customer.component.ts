@@ -17,7 +17,7 @@ export class CustomerComponent implements OnInit {
   }
 
   getAllCustomers(){
-    this.customerService.getAllCustomer().subscribe((response) => {
+    this.customerService.getAll().subscribe((response) => {
       this.customers = response.data;
       this.dataLoaded=true;
     });

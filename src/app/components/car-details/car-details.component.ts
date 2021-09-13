@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CarDetail } from 'src/app/models/carDetail';
 import { CarImage } from 'src/app/models/carImage';
@@ -8,6 +8,9 @@ import { Rental } from 'src/app/models/rental';
 import { SingleCarDetailService } from 'src/app/services/single-car-details.service';
 import { RentalService } from 'src/app/services/rental.service';
 import { SingleCarDetail } from 'src/app/models/singleCarDetail';
+import { FindeksScoreService } from 'src/app/services/findeks-score.service';
+import { UserService } from 'src/app/services/user.service';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
 
 @Component({
   selector: 'app-car-details',
@@ -20,23 +23,17 @@ export class CarDetailsComponent implements OnInit {
   constructor(
     private carDetailService: SingleCarDetailService,
     private activatedRoute: ActivatedRoute,
-    private rentalService: RentalService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private findeksService:FindeksScoreService,
+    private userService:UserService,
+    private localStorageService:LocalStorageService,
+    private router:Router
   ) {}
   carDetails: SingleCarDetail;
   carImages: CarImage[];
   defaultPath = 'https://localhost:44365';
   defaultCarImagePath = 'https://localhost:44365/images/default.jpg';
-  carId: number;
-  rentals: Rental[] = [];
-  dataLoaded = false;
-  result: Rental;
-  rentDate: Date;
-  returnDate: Date;
-  customerId: number = 1;
-  dateStatus: boolean = false;
-  rentalAddForm: FormGroup;
-
+  carId:number
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params) => {
@@ -44,17 +41,15 @@ export class CarDetailsComponent implements OnInit {
         this.GetCarDetailsById(params['carId']);
       }    
     });
-    // this.createRentalAddForm();
   }
 
   GetCarDetailsById(carId: number) {
     this.carDetailService.getCarDetailsById(carId).subscribe((response) => {
       this.carDetails = response.data;
       this.carImages = this.carDetails.carImage;
+      this.carId=this.carDetails.carId
     });
   }
-  
-
 
   getCurrentImageClass(image: CarImage) {
     if (image == this.carImages[0]) {
@@ -73,19 +68,24 @@ export class CarDetailsComponent implements OnInit {
   }
 
 
-  checkDateStatus(){
-    if(this.dateStatus==true){
-      this.toastrService.success('Kiralamaya Yönlendiriliyorsunuz');
-      this.toastrService.clear();
-    }
-    else{
-      this.toastrService.error('Arac Müsait Degil Gardas');
-      this.toastrService.clear();
-    }
+  compareFindeksScore(){
+    let userId:number;
+    let userScore: number;
+    this.userService.getByMail(this.localStorageService.getCurrentUserEmail()).subscribe((userResponse)=>{
+      userId = userResponse.data.id
+      this.findeksService.getById(userId).subscribe((findeksResponse)=>{
+        userScore = findeksResponse.data.score
+
+        if (this.carDetails.score>userScore) {  ///yarina hallet aq
+          this.toastrService.error("Findeks puanınız bu arabayi kiralamaya yeterli degildir.")
+        }
+        else{
+          this.toastrService.success("Findeks puanınız yeterli, kiralama sayfasina yönlendiriliyorsunuz.")
+          this.router.navigate(["/rent/car/"+this.carId])
+        }
+      })
+      
+    })
   }
  
 }
-//Bu uyarıyı dikkate al!
-// Stepper pagedeki ilerleme tuşunu(Kirala) javascript tarafında toastr uyarılarının durumuna göre aktif ettim.
-// Bundan dolayı toastr bildirimlerini çağırdıktan sonra clear() fonksiyonu ile aktif olan toastr bildirimini
-// kapatmak gerekiyor.

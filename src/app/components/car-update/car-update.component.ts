@@ -5,10 +5,14 @@ import { ToastrService } from 'ngx-toastr';
 import { Brand } from 'src/app/models/brand';
 import { Car } from 'src/app/models/car';
 import { Color } from 'src/app/models/color';
+import { Fuel } from 'src/app/models/fuel';
+import { Gear } from 'src/app/models/gear';
 import { SingleCarDetail } from 'src/app/models/singleCarDetail';
 import { BrandService } from 'src/app/services/brand.service';
 import { CarService } from 'src/app/services/car.service';
 import { ColorService } from 'src/app/services/color.service';
+import { FuelService } from 'src/app/services/fuel.service';
+import { GearService } from 'src/app/services/gear.service';
 import { SingleCarDetailService } from 'src/app/services/single-car-details.service';
 
 @Component({
@@ -22,13 +26,18 @@ export class CarUpdateComponent implements OnInit {
   cars: Car[] = [];
   brands: Brand[] = [];
   colors: Color[] = [];
+  fuelTypes:Fuel[] = [];
+  gearTypes:Gear[] = [];
   carId: number;
   carName: string;
   brandId: number;
   colorId: number;
+  gearId:number;
+  fuelId:number;
   modelYear: number;
   dailyPrice: number;
   description: string;
+  score:number;
 
   constructor(
     private carService: CarService,
@@ -38,6 +47,8 @@ export class CarUpdateComponent implements OnInit {
     private formBuilder: FormBuilder,
     private brandService: BrandService,
     private colorService: ColorService,
+    private fuelService:FuelService,
+    private gearService:GearService,
     private router: Router
   ) {}
 
@@ -46,17 +57,26 @@ export class CarUpdateComponent implements OnInit {
       if (params['carId']) {
         this.getCarDetailsByCarId(params['carId']);
         this.createCarForm();
-        this.getColorsAndBrands();
+        this.getProperties();
       }
     });
   }
-  getColorsAndBrands() {
+  
+  getProperties() {
     this.colorService.getAllColors().subscribe((response) => {
       this.colors = response.data;
     });
 
     this.brandService.getAllBrands().subscribe((response) => {
       this.brands = response.data;
+    });
+
+    this.fuelService.getAll().subscribe((response) => {
+      this.fuelTypes = response.data;
+    });
+
+    this.gearService.getAll().subscribe((response) => {
+      this.gearTypes = response.data;
     });
   }
 
@@ -69,9 +89,12 @@ export class CarUpdateComponent implements OnInit {
         this.carName = this.car.carName;
         this.brandId = this.car.brandId;
         this.colorId = this.car.colorId;
+        this.fuelId = this.car.fuelId
+        this.gearId = this.car.gearId
         this.modelYear = this.car.modelYear;
         this.dailyPrice = this.car.dailyPrice;
         this.description = this.car.description;
+        this.score = this.car.score;
       });
   }
 
@@ -81,9 +104,12 @@ export class CarUpdateComponent implements OnInit {
       carName: ['', Validators.required],
       brandId: ['', Validators.required],
       colorId: ['', Validators.required],
+      fuelId:['', Validators.required],
+      gearId:['', Validators.required],
       modelYear: ['', Validators.required],
       dailyPrice: ['', Validators.required],
       description: ['', Validators.required],
+      score:['', Validators.required],
     });
   }
 

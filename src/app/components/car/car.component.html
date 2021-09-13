@@ -1,107 +1,117 @@
-
-
 <div *ngIf="dataLoaded == false" class="spinner-border" role="status">
   <span class="visually-hidden">Loading...</span>
 </div>
 <br />
 
-<div class="mb-3">
-  <label for="filterText" class="form-label">Arac Ara</label>
-  <input
-    type="text"
-    [(ngModel)]="filterText"
-    class="form-control"
-    id="filterText"
-    placeholder="Aranan araba ile ilgili bir bilgi giriniz"
-  />
-</div>
-
-<table>
-  <tr>
-    <th>Renkler</th>
-    <th>Markalar</th>
-  </tr>
-  <tr>
-    <td>
-      <select
-      style="height: 40px; width: 370px"
-        class="form-select form-select-sm"
-        aria-label=".form-select-sm example"
-        [(ngModel)]="colorParam"
-      >
-        <option value="">Hepsi</option>
-        <option *ngFor="let color of colors">{{color.colorName}}</option>
-      </select>
-    </td>
-
-    <td style="width: 20px"></td>
-
-    <td>
-      <select
-        style="height: 40px; width: 370px"
-        class="form-select form-select-sm"
-        aria-label=".form-select-sm example"
-        [(ngModel)]="brandParam"
-      >
-        <option value="">Hepsi</option>
-        <option *ngFor="let brand of brands">{{brand.brandName}}</option>
-
-      </select>
-    </td>
-    
-    <td style="width: 20px"></td>
-    <td>
-      <button (click)="filterCars()" type="button" class="btn btn-success">Filtrele</button>
-    </td>
-    <td style="width: 20px"></td>
-    <td>
-      <button (click)="clearFilter()" type="button" class="btn btn-danger">Filtre Sil</button>
-    </td>
-  </tr>
-</table>
-
-
-<tr></tr>
-
-
-<div>
-  <table class="table table-striped table-hover table-bordered">
-    <thead>
-      <tr>
-        <th>Resim</th>
-        <th>Marka</th>
-        <th>Model</th>
-        <th>Renk</th>
-        <th>Yıl</th>
-        <th>Fiyat</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr
-        *ngFor="let car of cars | carFilterPipe:filterText |brandFilterPipe:brandFilter |colorFilterPipe:colorFilter"
-        style="height: 175px; width: 600px"
-        routerLink="/cars/car/{{ car.carId }}"
-      >
-        <td>
-          <div class="card" style="height: 50px; width: 250px">
-            <img
-              style="height: 150px; width: 250px"
-              *ngIf="car.firstCarImage == null"
-              src="{{ defaultCarImagePath }}"
-            />
-            <img
-              style="height: 150px; width: 250px"
-              *ngIf="car.firstCarImage != null"
-              src="{{ defaultPath }}{{ car.firstCarImage }}"
-            />
+<div class="container">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="content">
+        <div>
+          <div class="card">
+            <div class="card-header">
+              Aranan arac ile ilgili bir sey giriniz
+            </div>
+            <div class="card-body">
+              <input
+                type="text"
+                [(ngModel)]="filterText"
+                class="form-control"
+                id="filterText"
+              />
+            </div>
+            <div class="card-header">Markalar</div>
+            <div class="card-body">
+              <select
+                class="form-select form-select-sm"
+                aria-label=".form-select-sm example"
+                [(ngModel)]="brandParam"
+              >
+                <option value="">Hepsi</option>
+                <option *ngFor="let brand of brands">
+                  {{ brand.brandName }}
+                </option>
+              </select>
+            </div>
+            <div class="card-header">Renkler</div>
+            <div class="card-body">
+              <select
+                class="form-select form-select-sm"
+                aria-label=".form-select-sm example"
+                [(ngModel)]="colorParam"
+              >
+                <option value="">Hepsi</option>
+                <option *ngFor="let color of colors">
+                  {{ color.colorName }}
+                </option>
+              </select>
+            </div>
+            <div class="card-footer">
+              <button
+                (click)="filterCars()"
+                type="button"
+                class="btn btn-success"
+              >
+                Filtrele
+              </button>
+              <button
+                (click)="clearFilter()"
+                type="button"
+                class="btn btn-danger"
+              >
+                Filtre Sil
+              </button>
+            </div>
           </div>
-        </td>
-        <td>{{ car.brandName }}</td>
-        <td>{{ car.carName }}</td>
-        <td>{{ car.colorName }}</td>
-        <td>{{ car.modelYear }}</td>
-        <td>{{ car.dailyPrice }}</td>
-      </tr>
-    </tbody>
-  </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-9">
+      <div>
+        <table class="table table-striped table-hover table-bordered">
+          <tbody>
+            <tr
+              *ngFor="
+                let car of cars
+                  | carFilterPipe: filterText
+                  | brandFilterPipe: brandFilter
+                  | colorFilterPipe: colorFilter
+              "
+              style="height: 175px; width: 600px"
+              routerLink="/cars/car/{{ car.carId }}"
+            >
+              <td>
+                <div class="card" style="height: 150px; width: 250px">
+                  <img
+                    style="height: 150px; width: 250px"
+                    *ngIf="car.firstCarImage == null"
+                    src="https://localhost:44365\images\defaultcarimage.jpg"
+                  />
+                  <img
+                    style="height: 150px; width: 250px"
+                    *ngIf="car.firstCarImage != null"
+                    src="{{ defaultPath }}{{ car.firstCarImage }}"
+                  />
+                </div>
+              </td>
+              <td>{{ car.modelYear }} {{ car.brandName }} {{ car.carName }}</td>
+              <td>
+                Renk: {{ car.colorName }} <br />
+                Vites Tipi: {{ car.gearName }} <br />
+                Yakıt Tipi: {{ car.fuelName }}
+              </td>
+              <td>
+                Findeks Puanı: <br />
+                <h6>{{ car.score }}</h6>
+              </td>
+              <td>
+                Günlük Fiyat: <br />
+                <h6>{{ car.dailyPrice }}</h6>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>

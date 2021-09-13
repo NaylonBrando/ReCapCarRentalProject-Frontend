@@ -17,7 +17,7 @@
             </div>
           </div>
           <div class="mb-3">
-            <label for="brandName">Marka adı</label>
+            <label for="brandName">Marka</label>
             <div class="form-group">
               <select
                 class="form-select"
@@ -33,9 +33,8 @@
               </select>
             </div>
           </div>
-
           <div class="mb-3">
-            <label for="colorId">Renk adı</label>
+            <label for="colorId">Renk</label>
             <div class="form-group">
               <select
                 class="form-select"
@@ -52,7 +51,41 @@
             </div>
           </div>
           <div class="mb-3">
-            <label for="modelYear">Model Yılını</label>
+            <label for="fuelId">Yakıt tipi</label>
+            <div class="form-group">
+              <select
+                class="form-select"
+                aria-label="Renk Secimi"
+                formControlName="fuelId"
+                id="fuelId"
+                type="number"
+              >
+                <option value="" disabled selected>Seçiniz..</option>
+                <option *ngFor="let fuel of fuelTypes" [ngValue]="fuel.id">
+                  {{ fuel.fuelName }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="gearId">Vites tipi</label>
+            <div class="form-group">
+              <select
+                class="form-select"
+                aria-label="Renk Secimi"
+                formControlName="gearId"
+                id="gearId"
+                type="number"
+              >
+                <option value="" disabled selected>Seçiniz..</option>
+                <option *ngFor="let gear of gearTypes" [ngValue]="gear.id">
+                  {{ gear.gearName }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="modelYear">Model Yılı</label>
             <div class="form-group">
               <input
                 type="number"
@@ -76,6 +109,18 @@
             </div>
           </div>
           <div class="mb-3">
+            <label for="score">Findeks Skor</label>
+            <div class="form-group">
+              <input
+                type="number"
+                id="score"
+                formControlName="score"
+                class="form-control"
+                placeholder="Findeks Skorunu Giriniz"
+              />
+            </div>
+          </div>
+          <div class="mb-3">
             <label for="description">Açıklama</label>
             <div class="form-group">
               <input
@@ -90,8 +135,21 @@
         </form>
       </div>
       <div class="card-footer">
-        <button class="btn btn-fill btn-primary" (click)="add()">Ekle</button>
-      </div>
+        <table>
+          <tr>
+            <td>
+              <button class="btn btn-fill btn-dark" (click)="backToList()">
+                Geri Dön
+              </button>
+            </td>
+            <td></td>
+            <td>
+              <button class="btn btn-fill btn-primary" (click)="add()">
+                Ekle
+              </button>
+            </td>
+          </tr>
+        </table>
     </div>
   </div>
 </div>

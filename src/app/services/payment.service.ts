@@ -8,12 +8,12 @@ import { ResponseModel } from '../models/responseModel';
   providedIn: 'root'
 })
 export class PaymentService {
-  apiUrl ="https://localhost:44365/api/"
+  apiUrl ="https://localhost:44365/api/payment/"
 
   constructor(private httpClient:HttpClient) { }
 
   addPayment(payment:Payment):Observable<ResponseModel>{
-    let newPath = this.apiUrl + 'payment/add'
+    let newPath = this.apiUrl + 'add'
     return this.httpClient.post<ResponseModel>(newPath,payment);
   }
 

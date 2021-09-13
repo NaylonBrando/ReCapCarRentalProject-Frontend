@@ -1,0 +1,50 @@
+<body class="text-center">
+  <main class="form-signin">
+    <form [formGroup]="loginForm">
+      <h1 class="h3 mb-3 fw-normal">Giriş yap</h1>
+
+      <div class="form-floating">
+        <input
+          formControlName="email"
+          type="email"
+          class="form-control"
+          id="email"
+          placeholder="name@example.com"
+          [ngClass]="{'is-invalid':loginForm.get('email').touched &&
+          loginForm.get('email').invalid}"
+        />
+        <label for="email">E-posta</label>
+        <div *ngIf="loginForm.get('email').touched && loginForm.get('email').invalid"  class="invalid-feedback">
+          <div *ngIf="loginForm.get('email').errors.required">Email adresi zorunludur</div>
+          <div *ngIf="loginForm.get('email').errors.email">Email uzanti adresi yok!</div>
+        </div>
+      </div>
+      <div class="form-floating">
+        <input
+        formControlName="password"
+          type="password"
+          class="form-control"
+          id="password"
+          placeholder="Password"
+          [ngClass]="{'is-invalid':loginForm.get('password').touched &&
+          loginForm.get('password').invalid}"
+        />
+        <label for="password">Parola</label>
+        <div *ngIf="loginForm.get('password').touched && loginForm.get('password').invalid"  class="invalid-feedback">
+          <div *ngIf="loginForm.get('password').errors.required">Şifre giriniz.</div>
+          <div *ngIf="loginForm.get('password').errors.minlength">Şifre minimum 6 karakter olmalidir.</div>
+        </div>
+      </div>
+
+      <div class="checkbox mb-3">
+        <label>
+          <input type="checkbox" value="remember-me" /> Remember me
+        </label>
+      </div>
+      <button class="w-100 btn btn-lg btn-primary" (click)="login()">
+        Giriş yap
+      </button>
+      <p class="mt-5 mb-3 text-muted">&copy; 2017–2021</p>
+    </form>
+  </main>
+</body>

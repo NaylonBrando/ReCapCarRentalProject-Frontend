@@ -11,7 +11,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr  style="height: 175px; width: 600px">
+      <tr style="height: 175px; width: 600px">
         <td>
           <div class="card" style="height: 50px; width: 250px">
             <img
@@ -73,23 +73,19 @@
             <button
               type="button"
               class="btn btn-primary"
-              (click)="redirectToPayment(carId)"
+              (click)="checkCar(carId)"
             >
               Tarih Sorgula
             </button>
+            <br>
+            <br>
+            <div>
+              <button type="button" class="btn btn-success" routerLink="/payment/car/{{carDetails.carId}}/Start/{{rentDateValue}}/End/{{returnDateValue}}">Kirala</button>
+            </div>
           </div>
         </td>
-        <td>{{paymentValue}}</td>
+        <td>{{ paymentValue }}</td>
       </tr>
     </tbody>
-    <tr></tr>
-    <tfoot *ngIf="dateStatus==true">
-        <tr>
-            <td>Kart bilgilerini giriniz. Kart bilgileri girilip, onay alındıktan sonra secilen tarihe arac kiralanir</td>
-        </tr>
-      <app-payment [rentDate] = rentDateValue [returnDate] = returnDateValue [carId] = carId [totalRentValue]=paymentValue></app-payment>
-    </tfoot>
   </table>
 </div>
-{{rentDateValue}}
-Payment formu bu alta gelecek ama bu form uygun tarihte active, uygun olmayan tarihte disable

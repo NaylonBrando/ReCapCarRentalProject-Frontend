@@ -1,0 +1,83 @@
+<body class="text-center">
+  <main class="form-signin">
+    <form [formGroup]="registerForm" >
+      <h1 class="h3 mb-3 fw-normal">Kayıt Ol</h1>
+
+      <div class="form-floating">
+        <input
+          formControlName="firstName"
+          class="form-control"
+          id="firstName"
+          [ngClass]="{'is-invalid':registerForm.get('firstName').touched && 
+          registerForm.get('firstName').invalid}" required
+        />
+        <label for="firstName">İsim</label>
+        <div class="invalid-feedback">
+          <div>İsim giriniz.</div>
+        </div>
+      </div>
+      <div class="form-floating">
+        <input
+          formControlName="lastName"
+          class="form-control"
+          id="lastName"
+          [ngClass]="{'is-invalid':registerForm.get('lastName').touched && 
+          registerForm.get('lastName').invalid}" required
+        />
+        <label for="lastName">Soyisim</label>
+        <div class="invalid-feedback">
+          <div>Soyadi giriniz.</div>
+        </div>
+      </div>
+      <div class="form-floating">
+        <input
+        formControlName="email"
+          class="form-control"
+          id="email"
+          [ngClass]="{'is-invalid':registerForm.get('email').touched &&
+           registerForm.get('email').invalid}"
+        />
+        <label for="email">E-mail</label>
+        <div *ngIf="registerForm.get('email').touched && registerForm.get('email').invalid"  class="invalid-feedback">
+          <div *ngIf="registerForm.get('email').errors.required">Email adresini giriniz.</div>
+          <div *ngIf="registerForm.get('email').errors.email">Email uzanti adresi yok!</div>
+        </div>
+      </div>
+      <div class="form-floating">
+        <input
+        formControlName="password"
+          class="form-control"
+          id="password"
+          type="password"
+          [ngClass]="{'is-invalid':registerForm.get('password').touched &&
+          registerForm.get('password').invalid}"
+        />
+        <label for="password">Sifre</label>
+        <div *ngIf="registerForm.get('password').touched && registerForm.get('password').invalid"  class="invalid-feedback">
+          <div *ngIf="registerForm.get('password').errors.required">Şifre giriniz.</div>
+          <div *ngIf="registerForm.get('password').errors.minlength">Şifre minimum 6 karakter olmalidir.</div>
+        </div>
+      </div>
+      <div class="form-floating">
+        <input
+        formControlName="passwordAgain"
+          class="form-control"
+          id="passwordAgain"
+          type="password"
+          [ngClass]="{'is-invalid':registerForm.get('passwordAgain').touched &&
+          registerForm.get('passwordAgain').invalid}"
+        />
+        <label for="passwordAgain">Şifre (Tekrar)</label>
+        <div *ngIf="registerForm.get('passwordAgain').touched && registerForm.get('passwordAgain').invalid"  class="invalid-feedback">
+          <div *ngIf="registerForm.get('passwordAgain').errors.required">Aynı şifreyi tekrar giriniz.</div>
+          <div *ngIf="registerForm.get('passwordAgain').errors.minlength">Şifre minimum 6 karakter olmalidir.</div>
+          
+        </div>
+      </div>
+      <button class="w-100 btn btn-lg btn-primary" (click)="register()">
+        Kayıt
+      </button>
+      <p class="mt-5 mb-3 text-muted">&copy; 2017–2021</p>
+    </form>
+  </main>
+</body>

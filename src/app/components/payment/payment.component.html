@@ -1,19 +1,326 @@
+<br />
 <div class="container">
-    <div class="form-floating mb-3">
-        <input [(ngModel)]=customerId class="form-control w-50" id="floatingInput" placeholder="User Id">
-        <label for="floatingInput">Customer Id</label>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card text-dark bg-light mb-3" style="max-width: 18rem">
+        <div class="card-header">
+          <h5 class="card-title">Secilen Tarih Araligi</h5>
+        </div>
+        <div class="card-body">
+          <ul>
+            <li>Alış Tarihi</li>
+            {{
+              rentDate
+            }}
+            <li>Teslim Tarihi</li>
+            {{
+              returnDate
+            }}
+          </ul>
+        </div>
+      </div>
+
+      <div class="card text-dark bg-light mb-3" style="width: 18rem">
+        <div class="card-header">
+          <h5 class="card-title">Araba Bilgileri</h5>
+        </div>
+        <img *ngIf="car.carImage!=null"
+          src="{{ defaultPath }}{{ car.carImage[0].imagePath }}"
+          class="card-img-top"
+          alt=""
+        />
+        <div class="card-body">
+          <p class="card-text">
+            {{ car.brandName }} <br />
+            {{ car.carName }} <br />
+            {{ car.colorName }} <br />
+            {{ car.modelYear }} <br />
+            {{ car.colorName }} <br />
+            {{ car.description }} <br />
+            Günlük Fiyat: {{ car.dailyPrice }} 
+            <br /> 
+            <br />
+            Kiralanan Gün: {{sumRentDays}} <br>
+            Toplam Tutar: {{paymentValue}}
+          </p>
+        </div>
+      </div>
     </div>
-    <div class="form-floating mb-3">
-        <input [(ngModel)]="cardNumber" class="form-control w-50" id="floatingInput" placeholder="Card Number">
-        <label for="floatingInput">Card Number</label>
+    <br />
+    <div class="col-md-8">
+      <div class="content">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="card-title">Fatura Bilgileri</h5>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="flexRadioDefault"
+                id="flexRadioDefault1"
+                (change)="onItemChange(true)"
+              />
+              <label class="form-check-label" for="flexRadioDefault1">
+                Bireysel
+              </label>
+            </div>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="flexRadioDefault"
+                id="flexRadioDefault2"
+                checked
+                (change)="onItemChange(false)"
+              />
+              <label class="form-check-label" for="flexRadioDefault2">
+                Kurumsal
+              </label>
+            </div>
+          </div>
+          <div *ngIf="choice" class="card-body">
+            <form [formGroup]="invidualCustomerAddForm">
+              <div class="mb-3">
+                <label for="userIdInvidual" style="display: none"><b>User Id</b></label>
+                <input
+                  type="number"
+                  id="userIdInvidual"
+                  formControlName="userId"
+                  class="form-control"
+                  style="display: none"
+                  [(ngModel)]="userId"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="identificationNumber">TC Kimlik Numarası </label>
+                <div class="form-group">
+                  <input
+                    type="text"
+                    id="identificationNumber"
+                    formControlName="identificationNumber"
+                    class="form-control"
+                    [ngClass]="{'is-invalid':invidualCustomerAddForm.get('identificationNumber').touched &&
+                    invidualCustomerAddForm.get('identificationNumber').invalid}"
+                  />
+                  <div *ngIf="invidualCustomerAddForm.get('identificationNumber').touched && invidualCustomerAddForm.get('identificationNumber').invalid"  class="invalid-feedback">
+                    <div *ngIf="invidualCustomerAddForm.get('identificationNumber').errors.minlength">TC kimlik numarasi 11 karakter olmalidir.</div>
+                    <div *ngIf="invidualCustomerAddForm.get('identificationNumber').errors.maxlength">TC kimlik numarasi 11 karakter olmalidir.</div>
+                    <div *ngIf="invidualCustomerAddForm.get('identificationNumber').errors.required">TC kimlik numarasi giriniz.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="firstNameInvidaul">İsim</label>
+                <div class="form-group">
+                  <input
+                    type="text"
+                    id="firstNameInvidaul"
+                    formControlName="firstName"
+                    class="form-control"
+                    [ngClass]="{'is-invalid':invidualCustomerAddForm.get('firstName').touched &&
+                    invidualCustomerAddForm.get('firstName').invalid}"
+                  />
+                  <div class="invalid-feedback">
+                    <div>İsim giriniz.</div>
+                  </div>
+                </div>                            
+              </div>
+              <div class="mb-3">
+                <label for="lastNameInvidaul">Soyisim</label>
+                <div class="form-group">
+                  <input
+                    type="text"
+                    id="lastNameInvidaul"
+                    formControlName="lastName"
+                    class="form-control"
+                    [ngClass]="{'is-invalid':invidualCustomerAddForm.get('lastName').touched &&
+                    invidualCustomerAddForm.get('lastName').invalid}"
+                  />
+                  <div class="invalid-feedback">
+                    <div>Soyadi giriniz.</div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div *ngIf="!choice" class="card-body">
+            <form [formGroup]="corporateCustomerAddForm">
+              <div class="mb-3">
+                <label for="userIdCorporate" style="display: none"><b>User Id</b></label>
+                <input
+                  type="number"
+                  id="userIdCorporate"
+                  formControlName="userId"
+                  class="form-control"
+                  style="display: none"
+                  [(ngModel)]="userId"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="taxNumberCorporate">Vergi Numarasi</label>
+                <div class="form-group">
+                  <input
+                    type="text"
+                    id="taxNumberCorporate"
+                    formControlName="taxNumber"
+                    class="form-control"
+                    [ngClass]="{'is-invalid':corporateCustomerAddForm.get('taxNumber').touched &&
+                    corporateCustomerAddForm.get('taxNumber').invalid}"
+                  />
+                  <div *ngIf="corporateCustomerAddForm.get('taxNumber').touched && corporateCustomerAddForm.get('taxNumber').invalid"  class="invalid-feedback">
+                    <div *ngIf="corporateCustomerAddForm.get('taxNumber').errors.minlength">Vergi numarasi 10 karakter olmalidir.</div>
+                    <div *ngIf="corporateCustomerAddForm.get('taxNumber').errors.maxlength">Vergi numarasi 10 karakter olmalidir.</div>
+                    <div *ngIf="corporateCustomerAddForm.get('taxNumber').errors.required">Vergi numarasi giriniz.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="companyNameCorporate">Sirket İsmi</label>
+                <div class="form-group">
+                  <input
+                    type="text"
+                    id="companyNameCorporate"
+                    formControlName="companyName"
+                    class="form-control"
+                    [ngClass]="{'is-invalid':corporateCustomerAddForm.get('companyName').touched &&
+                    corporateCustomerAddForm.get('companyName').invalid}"
+                  />
+                  <div class="invalid-feedback">
+                    <div>Sirket ismi giriniz.</div>
+                  </div>   
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="card-footer"></div>
+        </div>
+      </div>
+      <br />
+      <div class="content">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="card-title">Kredi Kartı Bilgileri</h5>
+          </div>
+          <div class="card-body">
+            <form [formGroup]="creditCartForm">
+              <div class="mb-3">
+                <label for="customerId" style="display: none"><b>User Id</b></label>
+                <input
+                  type="number"
+                  id="customerId"
+                  formControlName="customerId"
+                  class="form-control"
+                  style="display: none"
+                  [(ngModel)]="customerId"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="cardNumber">Kart Numarası</label>
+                <div class="form-group">
+                  <input
+                    type="text"
+                    id="cardNumber"
+                    formControlName="cardNumber"
+                    class="form-control"
+                    [ngClass]="{'is-invalid':creditCartForm.get('cardNumber').touched &&
+                    creditCartForm.get('cardNumber').invalid}"
+                  />
+                  <div *ngIf="creditCartForm.get('cardNumber').touched && creditCartForm.get('cardNumber').invalid"  class="invalid-feedback">
+                    <div *ngIf="creditCartForm.get('cardNumber').errors.minlength">Kart numarası 16 karakter olmalidir.</div>
+                    <div *ngIf="creditCartForm.get('cardNumber').errors.maxlength">Vergi numarası 16 karakter olmalidir.</div>
+                    <div *ngIf="creditCartForm.get('cardNumber').errors.required">Kart numarası giriniz.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="firstNameCard">Kart Üzerindeki İsim </label>
+                <div class="form-group">
+                  <input
+                    type="text"
+                    id="firstNameCard"
+                    formControlName="firstName"
+                    class="form-control"
+                    [ngClass]="{'is-invalid':creditCartForm.get('firstName').touched &&
+                    creditCartForm.get('firstName').invalid}"
+                  />
+                  <div class="invalid-feedback">
+                    <div>İsim giriniz.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="lastName">Kart Üzerindeki Soyisim</label>
+                <div class="form-group">
+                  <input
+                    type="text"
+                    id="lastName"
+                    formControlName="lastName"
+                    class="form-control"
+                    [ngClass]="{'is-invalid':creditCartForm.get('lastName').touched &&
+                    creditCartForm.get('lastName').invalid}"
+                  />
+                  <div class="invalid-feedback">
+                    <div>Soyadi giriniz.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="expirationDate">Son Kullanma Tarihi</label>
+                <div class="form-group">
+                  <input
+                    type="text"
+                    id="expirationDate"
+                    formControlName="expirationDate"
+                    class="form-control"
+                    [ngClass]="{'is-invalid':creditCartForm.get('expirationDate').touched &&
+                    creditCartForm.get('expirationDate').invalid}"
+                  />
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="ccv">CCV Güvenlik Kodu</label>
+                <div class="form-group">
+                  <input
+                    type="text"
+                    id="ccv"
+                    formControlName="ccv"
+                    class="form-control"
+                    [ngClass]="{'is-invalid':creditCartForm.get('ccv').touched &&
+                    creditCartForm.get('ccv').invalid}"
+                  />
+                  <div *ngIf="creditCartForm.get('ccv').touched && creditCartForm.get('ccv').invalid"  class="invalid-feedback">
+                    <div *ngIf="creditCartForm.get('ccv').errors.minlength">Güvenlik kodu 3 karakter olmalidir.</div>
+                    <div *ngIf="creditCartForm.get('ccv').errors.maxlength">Güvenlik kodu 3 karakter olmalidir.</div>
+                    <div *ngIf="creditCartForm.get('ccv').errors.required">Güvenlik kodu giriniz.</div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="card-footer">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="flexCheckDefault"
+                [(ngModel)]="checkboxStatus"
+              />
+              <label class="form-check-label" for="flexCheckDefault">
+                Kartımı Sonraki Kiralamalar için Kaydetmek İstiyorum {{checkboxStatus}}
+              </label>
+              <button
+                class="btn btn-success"
+                style="float: right"
+                (click)="completeReservation()"
+                type="submit" 
+                [disabled]="!creditCartForm.valid"
+              >
+                Rezervasyonu Tamamla
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="form-floating mb-3">
-        <input [(ngModel)]="expirationDate" class="form-control w-50" id="floatingPassword" placeholder="Expiration Date">
-        <label for="floatingPassword">Expiration Date</label>
-    </div>
-    <div class="form-floating mb-3">
-        <input [(ngModel)]="cvv" class="form-control w-50" id="floatingPassword" placeholder="Cvv">
-        <label for="floatingPassword">Cvv</label>
-    </div>
-    <button (click)="checkTheCreditCard()" type="button" class="btn btn-primary">Secili Tarihe Kirala ve Öde</button>
+  </div>
 </div>

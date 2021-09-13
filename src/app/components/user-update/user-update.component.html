@@ -1,0 +1,85 @@
+<div  *ngIf="!passwordFormBody" class="content">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="title text-center">Kullanıcı Güncelle</h5>            
+            </div>
+            <div class="card-body">
+                <form [formGroup]="userUpdateForm">
+                    <div class="mb-3">
+                        <label for="colorId" style="display: none;"><b>User Id</b></label>
+                        <input type="number" id="id" formControlName="id" class="form-control" [(ngModel)]="id" style="display: none;" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="colorName">İsim</label>
+                        <div class="form-group">
+                            <input type="text" id="firstName" formControlName="firstName" class="form-control" [(ngModel)]="firstName" />
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="colorName">Soyisim</label>
+                        <div class="form-group">
+                            <input type="text" id="lastName" formControlName="lastName" class="form-control" [(ngModel)]="lastName" />
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="colorName">E-Mail</label>
+                        <div class="form-group">
+                            <input type="text" id="email" formControlName="email" class="form-control" [(ngModel)]="email" />
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="colorName">Sifre(Zorunlu)</label>
+                        <div class="form-group">
+                            <input type="password" id="password" formControlName="password" class="form-control" [(ngModel)]="password"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-fill btn-dark" routerLink="" >Geri dön</button>
+                <button class="btn btn-fill btn-success" (click)="update()" style="float: right;">Güncelle</button>
+                <button class="btn btn-fill btn-primary text-center" (click)="updatePasswordFormBody(true)">Sifre Degistir</button>
+            </div>  
+        </div>
+    </div>
+</div>
+
+
+
+<div *ngIf="passwordFormBody" class="content">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <form [formGroup]="passwordChangeForm">
+                    <div class="mb-3">
+                        <label for="colorId" style="display: none;"><b>User Id</b></label>
+                        <input type="number" id="id" formControlName="id" class="form-control" [(ngModel)]="id" style="display: none;" />
+                    </div>                   
+                    <div class="mb-3">
+                        <label for="password">Eski Sifre</label>
+                        <div class="form-group">
+                            <input type="password" id="oldPassword" formControlName="oldPassword" class="form-control" [(ngModel)]="oldPassword"/>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password">Yeni Sifre</label>
+                        <div class="form-group">
+                            <input type="password" id="oldPassword" formControlName="newPassword" class="form-control" [(ngModel)]="newPassword"/>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password">Yeni Sifre(Tekrar)</label>
+                        <div class="form-group">
+                            <input type="password" id="oldPassword" formControlName="newPasswordAgain" class="form-control" [(ngModel)]="newPasswordAgain"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-fill btn-dark" (click)="updatePasswordFormBody(false)">Geri Dön</button>
+                <button class="btn btn-fill btn-success" style="float: right;" (click)="updatePassword()">Güncelle</button>
+            </div>
+        </div>
+    </div>
+</div>

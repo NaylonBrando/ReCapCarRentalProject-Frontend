@@ -15,16 +15,16 @@ import { ColorService } from 'src/app/services/color.service';
 export class CarComponent implements OnInit {
   cars: CarDetail[] = [];
   dataLoaded = false;
-  defaultPath ="https://localhost:44365";
-  defaultCarImagePath="https://localhost:44365/images/default.jpg";
-  filterText="";
-  colors:Color[]
-  brands:Brand[]
-  brandParam="";
-  colorParam="";
-  brandFilter="";
-  colorFilter="";
-  selected="";
+  defaultPath = 'https://localhost:44365';
+  defaultCarImagePath = "https://localhost:44365\images\defaultcarimage.jpg";
+  filterText = '';
+  colors: Color[];
+  brands: Brand[];
+  brandParam = '';
+  colorParam = '';
+  brandFilter = '';
+  colorFilter = '';
+  selected = '';
   ngTextRead(text: string) {
     alert(text);
   }
@@ -32,8 +32,8 @@ export class CarComponent implements OnInit {
   constructor(
     private carService: CarService,
     private activatedRoute: ActivatedRoute,
-    private brandService:BrandService,
-    private colorService:ColorService,
+    private brandService: BrandService,
+    private colorService: ColorService
   ) {}
 
   ngOnInit(): void {
@@ -70,25 +70,24 @@ export class CarComponent implements OnInit {
       this.dataLoaded = true;
     });
   }
-  filterCars(){
-    this.colorFilter=this.colorParam;
-    this.brandFilter=this.brandParam;
+  filterCars() {
+    this.colorFilter = this.colorParam;
+    this.brandFilter = this.brandParam;
   }
-  clearFilter(){
-    this.brandParam="";
-    this.colorParam="";
-    this.colorFilter="";
-    this.brandFilter="";
+  clearFilter() {
+    this.brandParam = '';
+    this.colorParam = '';
+    this.colorFilter = '';
+    this.brandFilter = '';
   }
 
-  getColorsAndBrands(){
+  getColorsAndBrands() {
+    this.colorService.getAllColors().subscribe((response) => {
+      this.colors = response.data;
+    });
 
-    this.colorService.getAllColors().subscribe((response)=>{
-      this.colors=response.data
-    })
-
-    this.brandService.getAllBrands().subscribe((response)=>{
-      this.brands=response.data;
-    })
+    this.brandService.getAllBrands().subscribe((response) => {
+      this.brands = response.data;
+    });
   }
 }

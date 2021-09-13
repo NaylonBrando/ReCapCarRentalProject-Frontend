@@ -3,12 +3,13 @@
         <div class="card">
             <div class="card-header">
                 <h5 class="title text-center">Araba güncelle</h5>
+                <button class="btn btn-warning" routerLink="/cars/edit/images/{{car.carId}}" style="float: right;">Resimlerini düzenle</button>
             </div>
             <div class="card-body">
                 <form [formGroup]="carUpdateForm">
                     <div class="mb-3">
                         <label for="carId"><b>Araba Id</b></label>
-                        <input type="number" id="carId" formControlName="carId" class="form-control" [(ngModel)]="carId" />
+                        <input [readonly]="true" type="number" id="carId" formControlName="carId" class="form-control" [(ngModel)]="carId" />
                     </div>
                     <div class="mb-3">
                         <label for="carName">Araba adı</label>
@@ -36,15 +37,39 @@
                         </div>
                     </div>
                     <div class="mb-3">
+                        <label for="fuelId">Yakıt Tipi</label>
+                        <div class="form-group">
+                            <select *ngIf="car" [(ngModel)]="car.fuelId" type="number" id="fuelId" class="form-select" aria-label="Yakıt secimi" formControlName="fuelId">
+                                <option   disabled selected>Seçiniz..</option>
+                                <option *ngFor="let fuel of fuelTypes"  [ngValue]="fuel.id">{{fuel.fuelName}}</option>
+                              </select>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="gearId">Vites Tipi</label>
+                        <div class="form-group">
+                            <select *ngIf="car" [(ngModel)]="car.gearId" type="number" id="gearId" class="form-select" aria-label="Yakıt secimi" formControlName="gearId">
+                                <option   disabled selected>Seçiniz..</option>
+                                <option *ngFor="let gear of gearTypes"  [ngValue]="gear.id">{{gear.gearName}}</option>
+                              </select>
+                        </div>
+                    </div>
+                    <div class="mb-3">
                         <label for="modelYear">Model yılı</label>
                         <div class="form-group">
                             <input type="number" id="modelYear" formControlName="modelYear" class="form-control" [(ngModel)]="modelYear" />
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="dailyPrice">Günlük fiyatı</label>
+                        <label for="dailyPrice">Günlük Fiyatı</label>
                         <div class="form-group">
                             <input type="number" id="dailyPrice" formControlName="dailyPrice" class="form-control" [(ngModel)]="dailyPrice" />
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="score">Findeks Puanı</label>
+                        <div class="form-group">
+                            <input type="number" id="score" formControlName="score" class="form-control" [(ngModel)]="score"/>
                         </div>
                     </div>                    
                     <div class="mb-3">
@@ -63,4 +88,3 @@
         </div>
     </div>
 </div>
-© 2021 GitHub, Inc.
